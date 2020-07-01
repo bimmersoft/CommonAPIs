@@ -1,4 +1,4 @@
-namespace CM_API.Areas.HelpPage
+namespace CAPIs.Areas.HelpPage
 {
     /// <summary>
     /// Indicates whether the sample is used for request or response

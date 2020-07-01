@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace CM_API
+namespace CAPIs
 {
     public static class WebApiConfig
     {
@@ -16,8 +16,8 @@ namespace CM_API
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}"
+                //defaults: new { id = RouteParameter.Optional }
             );
         }
     }

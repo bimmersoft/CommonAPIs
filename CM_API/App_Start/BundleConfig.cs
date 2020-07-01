@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace CM_API
+namespace CAPIs
 {
     public class BundleConfig
     {
@@ -22,6 +22,16 @@ namespace CM_API
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+            bundles.Add(new ScriptBundle("~/bundles/printThis").Include(
+            "~/Scripts/printThis.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jQuery-print").Include(
+            "~/Scripts/jQuery.print.js"));
+            bundles.Add(new ScriptBundle("~/bundles/html2canvas").Include(
+            "~/Scripts/html2canvas.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
+            "~/Scripts/jquery-ui.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery-qrcode").Include(
+            "~/Scripts/jquery.qrcode.min.js"));
         }
     }
 }

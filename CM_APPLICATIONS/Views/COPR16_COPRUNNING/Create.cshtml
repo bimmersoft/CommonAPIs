@@ -10,7 +10,7 @@
 <style>
     .PN-TEXT {
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        font-size: 14px;
+        font-size: 11px;
         text-align: left;
         white-space: nowrap;
     }
@@ -27,8 +27,8 @@
 
     .label-sticker {
         width: 100.0mm !important;
-        height: 51.5mm !important;
-        max-height: 51.5mm !important;
+        height: 53.5mm !important;
+        max-height: 60.5mm !important;
         max-width: 100.0mm !important;
         overflow: hidden;
         /*background-color: lightgray;*/
@@ -222,11 +222,13 @@
                             <th>&nbsp;</th>
                             <th class="PN-TEXT">Lot.: <lable class="COPSBLOTB" /></th>
                         </tr>
+
                         <tr>
                             <th class="PN-TEXT">BKL P/No.: <lable class="COPBKLPNOB" /></th>
                             <th>&nbsp;</th>
                             <th class="PN-TEXT">Lot.: <lable class="COPBKLLOTB" /></th>
                         </tr>
+                        
                     </table>
 
 
@@ -752,6 +754,7 @@
             }
         });
     }
+
     function updatePosList(strMODEL_ID) {
         var varText = strMODEL_ID;
         var urlText = "@Url.Action("getPosListByModel","COPR16_COPRUNNING")";
@@ -878,6 +881,8 @@
     $("input.bklBtn").click(function () {
         var MODEL_NO = $('#cOPR16_COPRUNNING_MODEL_ID').val();
         var LINE_NO = $('.list_LINE_ID').val();
+        var SB_PARTNO = $('.SB-PNO').val();
+        $('.BKL_FG_NO').val(SB_PARTNO);
         $('.BKL_MODEL_NO').val(MODEL_NO);
         $('.BKL_MODEL_NO').attr('DISABLED', 'DISABLED');
         $('.BKL_LINE_NO').val(LINE_NO);
@@ -949,6 +954,15 @@
         $('.CONFIRM-BKL-PNO').val(fg_id);
         $('.CONFIRM-BKL-LOTNO').focus();
     });
+    $("body").on("click", "a.bkl_select_btn2", function (ev) {
+        var p = $(this).parent();
+        var fg_id = $(p).find(".hBKL-PNO").val();
+        var value1 = $('.CONFIRM-BKL-PNO').val();
+        $('#SELECT-BKL-DLG').modal('show');
+        $('#BKL_DLG').modal('hide');
+        $('.CONFIRM-BKL-PNO').val(value1 + ", " + fg_id);
+        $('.CONFIRM-BKL-LOTNO').focus();
+    });
     $('.confirm-select-Btn').click(function () {
         var SBPNO = $('.SB-PNO').val();
         var SBLOTNO = $('.SB-LOTNO').val();
@@ -980,6 +994,7 @@
         var model_no = $('.BKL_MODEL_NO').val();
         var position_no = $('.list_POSITION_ID').val();
 
+
         var urlText = "@Url.Action("getBuckleListModel","COPR16_COPRUNNING")";
         var options = { "backdrop": "static", keyboard: true };
         var jdata = {
@@ -991,6 +1006,7 @@
         }
         console.log(jdata);
         //console.log(".---.");
+        var varMultipleBLK = false;
         $.ajax({
             type: "POST",
             url: urlText,     //your action
@@ -1003,19 +1019,81 @@
                 //updateInfo(result);
                 
                 tbVarBKL.clear().draw();
-                var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT</a>";
 
                 $.each(result.Data, function (i, item) {
-                    var row = tbVarBKL.row.add([
-                        (result.Data[i].fgtype_id == null || result.Data[i].fgtype_id == '')? result.Data[i].ITEM_ID: result.Data[i].ITEM_ID +', ' + result.Data[i].fgtype_id ,
-                        result.Data[i].MODLE_ID,
-                        result.Data[i].LINE_ID,
-                        result.Data[i].POS_DESC,
-                        ""]).draw(false).node();
-			            var hPNO = $("<input type='hidden' value='" + result.Data[i].ITEM_ID + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+                    if (result.Data[i].fgtype_id == null || result.Data[i].fgtype_id == '') {
+                        varMultipleBLK = false;
+                    }else {
+                        varMultipleBLK = true;
+                    }
+                    if (varMultipleBLK) {
+                        var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT 1st BLK </a>";
+                        var selectBtn2 = "<a class='btn btn-primary button bkl_select_btn2' style='margin-top:5px'>SELECT 2nd BLK </a>";
+                        var blkArr = result.Data[i].fgtype_id.split(',');
+                        var row = tbVarBKL.row.add([
+                            result.Data[i].ITEM_ID,
+                            result.Data[i].MODLE_ID,
+                            result.Data[i].LINE_ID,
+                            result.Data[i].POS_DESC,
+                            ""]).draw(false).node();
+                        var hPNO = $("<input type='hidden' value='" + result.Data[i].ITEM_ID + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
                         $(row).find('td').eq(4).addClass('command');
                         $(row).find('td').eq(4).append(selectBtn);
-			            $(row).find('td').eq(4).append(hPNO);
+                        if(varMultipleBLK) {
+                                    $(row).find('td').eq(4).append("<BR>");
+                                    $(row).find('td').eq(4).append(selectBtn2);
+                                    $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        }
+                        $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        $(row).find('td').eq(4).append(hPNO);
+
+                        if (blkArr.length > 0) {
+                            console.log(blkArr);
+
+                            $.each(blkArr, function (index, keyString) {
+                                console.log("index: ",index);
+                                console.log("keyString: ",keyString);
+                                
+                                var row = tbVarBKL.row.add([
+                                    keyString,
+                                    result.Data[i].MODLE_ID,
+                                    result.Data[i].LINE_ID,
+                                    result.Data[i].POS_DESC,
+                                    ""]).draw(false).node();
+                                var hPNO = $("<input type='hidden' value='" + keyString + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
+                                $(row).find('td').eq(4).addClass('command');
+                                $(row).find('td').eq(4).append(selectBtn);
+                                if(varMultipleBLK) {
+                                    $(row).find('td').eq(4).append("<BR>");
+                                    $(row).find('td').eq(4).append(selectBtn2);
+                                    $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                                }
+                                $(row).find('td').eq(4).append(hPNO);
+                                
+                            });
+                        }
+                   
+                    } else {
+                        var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT BLK </a>";
+                        
+                        var row = tbVarBKL.row.add([
+                            (varMultipleBLK == false) ? result.Data[i].ITEM_ID : result.Data[i].ITEM_ID + ', ' + result.Data[i].fgtype_id,
+                            result.Data[i].MODLE_ID,
+                            result.Data[i].LINE_ID,
+                            result.Data[i].POS_DESC,
+                            ""]).draw(false).node();
+                        var hPNO = $("<input type='hidden' value='" + result.Data[i].ITEM_ID + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
+                        $(row).find('td').eq(4).addClass('command');
+                        $(row).find('td').eq(4).append(selectBtn);
+                        $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        $(row).find('td').eq(4).append(hPNO);
+
+                    }
+                    
+			        
                 });
 
 
@@ -1027,6 +1105,7 @@
         });
         return false;
     });
+
 </script><!-- /Script For Select Bunkle -->
 <script>
     $('.createBtn').click(function () {

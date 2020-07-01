@@ -310,7 +310,7 @@
         "ordering": false,
         "info": true,
         "stripe": true,
-        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        "lengthMenu": [[50, 100, -1], [50, 100, "All"]],
         "language": {
                 "lengthMenu": "Display _MENU_ items per page",
                 "zeroRecords": "No items available",
@@ -372,12 +372,13 @@
                 console.log(result);
                 console.log(result[0].GUID);
                 if (result[0].GUID == undefined || result[0].GUID == null) {
-                    //alert("UNIQ_ID: " + result[0].UNIQ_ID);
+                    //alert("YES-UNIQ_ID: " + result[0].UNIQ_ID);
                     //alert("SQLCMD: " + result[0].SQLCMD);
                     //alert("result[0]: " + result[0].de);
 
                     upload_files();
                 } else {
+                    //alert("NO-UNIQ_ID: " + result[0].UNIQ_ID);
                     $('#CONFIRMED_ASK2').html("Selected date \""+uniq_id+"\"are exiting uploaded <br>Please confirmed to continue?");
                     $('#CONFIRMED_DLG2').modal("show");
 
@@ -410,6 +411,9 @@
         var formObject = $('.main-form-data');
         var formData = new FormData(formObject[0]);
         autoCloseCompleted = false;
+        console.log(formObject);
+        console.log(formData);
+        console.log($(formObject).prop("action"));
         $.ajax({
             type: "POST",
             url: $(formObject).prop("action"),
@@ -429,9 +433,27 @@
             success: function (result) {
                 console.log(result);
                 var rowResult = result.Data;
-                console.log(rowResult);
+                //console.log(rowResult);
 
                 tbVar.clear().draw();
+                $.each(rowResult, function (index,keyValue) {
+                    //console.log(index, keyValue);
+                    var cols = keyValue;
+
+                    var vFGNO = checkField(cols, 'Item Number');
+                    var vDATE = checkField(cols, 'Date');
+                    var vQTY = checkField(cols, 'Loc Qty Change');
+                    if (vQTY == null) {
+                        console.log(cols);
+                    }
+                    var nvDATE = moment.utc(vDATE).toDate();
+                    vDATE = moment(nvDATE).local().format('YYYY-MMM-DD');
+
+                    //console.log([vFGNO, vDATE, vQTY]);
+                     var rows = tbVar.row.add([vFGNO, vDATE, vQTY]).draw(false).node();
+                });
+                console.log("Table Created....");
+                /*
                 for (var jsonRow = 1; jsonRow < rowResult.length; jsonRow++) {
                     var cols = rowResult[jsonRow];
                     var arrVar = [];
@@ -450,9 +472,12 @@
                     console.log("vDATE: " + vDATE);
                     //var nvDATE = moment.utc(vDATE);
                     vDATE = moment(nvDATE).local().format('YYYY-MMM-DD');
-                    var rows = tbVar.row.add([vFGNO,vDATE,vQTY]).draw(false).node();
+                    console.log([vFGNO, vDATE, vQTY]);
+                    var rows = tbVar.row.add([vFGNO, vDATE, vQTY]).draw(false).node();
+                    console.log("Row Created....");
                 }
-
+                */
+                console.log("Table Created....");
                 //$('#lModalBodySuccess').html("This Volume Date uploaded");
                 //$('#lModalSuccess').modal("show");
                 closeConpleting();

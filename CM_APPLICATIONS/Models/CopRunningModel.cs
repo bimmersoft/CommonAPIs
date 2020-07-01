@@ -160,6 +160,16 @@ namespace CM_APPLICATIONS.Models
         public object COPNOEX { get; set; }
         public object COPQTY { get; set; }
         public object COPQTYEX { get; set; }
+
+        public object COPQTY_SUGGESTION1{ get; set; }
+        public object COPQTY_SUMMARY1 { get; set; }
+        public object COPQTY_SUGGESTION2 { get; set; }
+        public object COPQTY_SUMMARY2 { get; set; }
+
+        public object DIM_DATE { get; set; }
+
+        public object MODEL_REM1 { get; set; }
+        public object MODEL_REM2 { get; set; }
     }
     public class ResultModel
     {

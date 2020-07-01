@@ -434,15 +434,26 @@ namespace CM_APPLICATIONS.Controllers
                 sqlParams.Add(new SqlParameter("@FSIM_UNIQ_ID", item.FSIM_UNIQ_ID));
                 sqlParams.Add(new SqlParameter("@ITEM_ID", item.ITEM_ID));
                 sqlParams.Add(new SqlParameter("@BUSI_DATE", item.BUSI_DATE));
-                sqlParams.Add(new SqlParameter("@QTY", item.QTY));
+                sqlParams.Add(new SqlParameter("@QTY", item.QTY ?? "0"));
                 sqlParams.Add(new SqlParameter("@CRE_BY", fsHeader.CRE_BY));
                 await db.Database.ExecuteSqlCommandAsync(sqlCOMMAND_ITEMS, sqlParams.ToArray());
             }
             fgVolumes[0].FSIM_UNIQ_ID = fsHeader.FSIM_UNIQ_ID;
+
             List<SqlParameter> PostsqlParams = new List<SqlParameter>();
             string sqlCOMMAND_POST = "exec [dbo].[sp_update_acc_volume] @FSIM_UNIQ_ID ";
             PostsqlParams.Add(new SqlParameter("@FSIM_UNIQ_ID", fsHeader.FSIM_UNIQ_ID));
             await db.Database.ExecuteSqlCommandAsync(sqlCOMMAND_POST, PostsqlParams.ToArray());
+
+            List<SqlParameter> UpdateTrackingWithOutParams = new List<SqlParameter>();
+            string sqlCOMMAND_UpdateTrackingWithOut = "EXEC SP_UPDATE_MODEL_TRACKING @VALUE_QTY";
+            UpdateTrackingWithOutParams.Add(new SqlParameter("@VALUE_QTY", 5000));
+            await db.Database.ExecuteSqlCommandAsync(sqlCOMMAND_UpdateTrackingWithOut, UpdateTrackingWithOutParams.ToArray());
+
+            List<SqlParameter> UpdateTrackingWithConParams = new List<SqlParameter>();
+            string sqlCOMMAND_UpdateTrackingWithCon = "EXEC SP_UPDATE_MODEL_TRACKING @VALUE_QTY";
+            UpdateTrackingWithConParams.Add(new SqlParameter("@VALUE_QTY", 10000));
+            await db.Database.ExecuteSqlCommandAsync(sqlCOMMAND_UpdateTrackingWithCon, UpdateTrackingWithConParams.ToArray());
 
             rowData.Data = fgVolumes;
             return Json(rowData, JsonRequestBehavior.AllowGet);

@@ -1,6 +1,6 @@
 using System;
 
-namespace CM_API.Areas.HelpPage.ModelDescriptions
+namespace CAPIs.Areas.HelpPage.ModelDescriptions
 {
     /// <summary>
     /// Describes a type model.

@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace CM_API
+namespace CAPIs
 {
     public class FilterConfig
     {

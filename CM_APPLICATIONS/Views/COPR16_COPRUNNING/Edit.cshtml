@@ -12,7 +12,7 @@
     .PN-TEXT {
         /*font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;*/
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 18px !important;
+        font-size: 11px !important;
         text-align: left;
         font-weight: bold;
         white-space: nowrap;
@@ -55,6 +55,10 @@
         margin-left: 0px !important;
         width: 100% !important;
     }
+
+    .PROC_ID {
+        display: none !important;
+    }
 </style>
 @using (Html.BeginForm())
 {
@@ -92,10 +96,10 @@
                             @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING.WRK_ID, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group PROC_ID">
                         @Html.LabelFor(model => model.cOPR16_COPRUNNING.PROC_ID, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-8">
-                            @Html.Hidden("hPROC_ID",Model.cOPR16_COPRUNNING.PROC_ID);
+                            @Html.Hidden("hPROC_ID", Model.cOPR16_COPRUNNING.PROC_ID);
                             @*@Html.EditorFor(model => model.cOPR16_COPRUNNING.PROC_ID, new { @class = "form-control PROC_ID", @rows = "6" })*@
                             @*@Html.EditorFor(model => model.cOPR16_COPRUNNING.PROC_ID, new { htmlAttributes = new { @class = "form-control PROC_ID", @readonly = "true" } })*@
                             @Html.DropDownListFor(model => model.cOPR16_COPRUNNING.PROC_ID, Model.PROC_LIST, null, new { @class = "form-control PROC_ID", @readonly = "true", @disabled = "disabled" })
@@ -110,11 +114,18 @@
                             @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING.MODEL_ID, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.cOPR16_COPRUNNING.LINE_ID, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-8">
+                            @*@Html.EditorFor(model => model.cOPR16_COPRUNNING.MODEL_ID, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.DropDownListFor(model => model.cOPR16_COPRUNNING.LINE_ID, Model.LINE_LIST, null, new { @class = "form-control list_LINE_ID" })
+                            @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING.LINE_ID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
                     <div class="form-group">
                         @Html.LabelFor(model => model.cOPR16_COPRUNNING.POSITION_ID, htmlAttributes: new { @class = "control-label col-md-3" })
                         <div class="col-md-8">
-                            @Html.DropDownListFor(model => model.cOPR16_COPRUNNING.POSITION_ID, Model.POSITION_LIST, null, new { @class = "form-control POSID" })
+                            @Html.DropDownListFor(model => model.cOPR16_COPRUNNING.POSITION_ID, Model.POSITION_LIST, null, new { @class = "form-control POSID list_POSITION_ID" })
                             @*@Html.EditorFor(model => model.cOPR16_COPRUNNING.POSITION_ID, new { htmlAttributes = new { @class = "form-control" } })*@
                             @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING.POSITION_ID, "", new { @class = "text-danger" })
                         </div>
@@ -265,7 +276,7 @@
     <style>
         .dataTables_wrapper {
             float: left !important;
-            width: 75% !important;
+            width: 100% !important;
             margin-left: 0px !important;
         }
 
@@ -527,7 +538,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.FG_NO, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.FG_NO, new { htmlAttributes = new { @class = "form-control FG_NO" } })
+                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.FG_NO, new { htmlAttributes = new { @class = "form-control FG_NO SB-FG-NO" } })
                                         @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.FG_NO, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -539,10 +550,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, new { htmlAttributes = new { @class = "form-control BRAND_NO" } })
-                                        @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, new { htmlAttributes = new { @class = "form-control SB-LINE-NO" } })
+                                        @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -571,13 +582,13 @@
                                                 @Html.Label("ITEM NO")
                                             </th>
                                             <th>
-                                                @Html.Label("DESCRIPTION")
-                                            </th>
-                                            <th>
                                                 @Html.Label("MODEL")
                                             </th>
                                             <th>
                                                 @Html.Label("LINE")
+                                            </th>
+                                            <th>
+                                                @Html.Label("POSISION")
                                             </th>
                                             <th>
                                                 @Html.Label("ACTION")
@@ -623,15 +634,15 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.MODLE_ID, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.MODLE_ID, new { htmlAttributes = new { @class = "form-control MODEL_NO BKL_MODEL-NO" } })
+                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.MODLE_ID, new { htmlAttributes = new { @class = "form-control BKL_MODEL_NO" } })
                                         @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.MODLE_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                    @Html.LabelFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, htmlAttributes: new { @class = "control-label col-md-4" })
                                     <div class="col-md-8">
-                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, new { htmlAttributes = new { @class = "form-control BKL_BRAND_NO" } })
-                                        @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.BRAND_ID, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, new { htmlAttributes = new { @class = "form-control BKL_LINE_NO" } })
+                                        @Html.ValidationMessageFor(model => model.cOPR16_ITEMS_MSTR.LINE_ID, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -657,16 +668,16 @@
                                     <thead>
                                         <tr>
                                             <th>
-                                                @Html.Label("ITEM NO")
-                                            </th>
-                                            <th>
-                                                @Html.Label("DESCRIPTION")
+                                                @Html.Label("ITEM NO (BUCKLE)")
                                             </th>
                                             <th>
                                                 @Html.Label("MODEL")
                                             </th>
                                             <th>
                                                 @Html.Label("LINE")
+                                            </th>
+                                            <th>
+                                                @Html.Label("POSITION")
                                             </th>
                                             <th>
                                                 @Html.Label("ACTION")
@@ -710,8 +721,8 @@
                 <div class="form-group align-items: left;text-align: left;white-space: nowrap;flex-flow: nowrap;flex-wrap: nowrap;width: 500px !important;">
                     @Html.LabelFor(model => model.cOPR16_COPRUNNING_DT.LOTNO, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.cOPR16_COPRUNNING_DT_SB.LOTNO, new { htmlAttributes = new { @class = "form-control SB-LOTNO" } })
-                        @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING_DT_SB.LOTNO, "", new { @class = "text-danger" })
+                        @Html.EditorFor(model => model.cOPR16_COPRUNNING_DT.LOTNO, new { htmlAttributes = new { @class = "form-control SB-LOTNO" } })
+                        @Html.ValidationMessageFor(model => model.cOPR16_COPRUNNING_DT.LOTNO, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -811,14 +822,21 @@
 </script><!-- /Script For First Display -->
 
 <script>
-    $('.search-sb-btn').click(function () {
+     $('.search-sb-btn').click(function () {
         var fg_no = $('.FG_NO').val();
-        var brand_no = $('.BRAND_NO').val();
+        var line_no = $('.list_LINE_ID').val();
         var model_no = $('.MODEL_NO').val();
+        var pos_no = $('.list_POSITION_ID').val();
 
-        var urlText = "@Url.Action("GetItems","COPR16_COPRUNNING")";
+        var urlText = "@Url.Action("getSBListModel","COPR16_COPRUNNING")";
         var options = { "backdrop": "static", keyboard: true };
-        var jdata = {"fg_no":fg_no,"model_no": model_no,"brand_no":brand_no}
+        var jdata = {
+            "__RequestVerificationToken": $('input[name="__RequestVerificationToken"').val(),
+            "fg_no": fg_no,
+            "model_no": model_no,
+            "line_no": line_no,
+            "pos_no": pos_no
+        }
         console.log(jdata);
         //console.log(".---.");
         $.ajax({
@@ -834,17 +852,17 @@
                 tbVarSB.clear().draw();
                 var selectBtn = "<a class='btn btn-primary button sb_select_btn'>SELECT</a>";
 
-                $.each(result, function (i, item) {
+                $.each(result.Data, function (i, item) {
                     var row = tbVarSB.row.add([
-                        result[i].a_FG_NO,
-                        result[i].b_FG_DESC,
-                        result[i].a_MODLE_ID,
-                        result[i].a_MODLE_ID,
+                        result.Data[i].FG_NO,
+                        result.Data[i].MODLE_ID,
+                        result.Data[i].LINE_ID,
+                        result.Data[i].POS_DESC,
                         ""]).draw(false).node();
-			var hPNO = $("<input type='hidden' value='" + result[i].a_FG_NO + "' id='hSB-PNO' class='hSB-PNO'/>");
-                        $(row).find('td').eq(4).addClass('command');
-                        $(row).find('td').eq(4).append(selectBtn);
-			$(row).find('td').eq(4).append(hPNO);
+			        var hPNO = $("<input type='hidden' value='" + result.Data[i].FG_NO + "' id='hSB-PNO' class='hSB-PNO'/>");
+                    $(row).find('td').eq(4).addClass('command');
+                    $(row).find('td').eq(4).append(selectBtn);
+			        $(row).find('td').eq(4).append(hPNO);
                 });
 
 
@@ -903,10 +921,101 @@
         $('.COPPOSB').html(varCaption);
         $('.COPPOSA').html(varCaption);
     }
+    /*
     function updateModel() {
         var varText = $('#cOPR16_COPRUNNING_MODEL_ID').val();
         $('.COPMODELA').html(varText);
         $('.COPMODELB').html(varText);
+    }
+    */
+    function updateModel() {
+        var varText = $('#cOPR16_COPRUNNING_MODEL_ID').val();
+        var urlText = "@Url.Action("getModelName","COPR16_COPRUNNING")";
+        var options = { "backdrop": "static", keyboard: true };
+        var jdata = { posID: varText }
+        var modelString = "";
+        $.ajax({
+            type: "POST",
+            url: urlText,     //your action
+            data: jdata,
+            success: function (result) {
+                console.log(result);
+                console.log(result.Data);
+                modelString = result.Data.MODEL_DESC;
+                $('.COPMODELA').html(modelString);
+                $('.COPMODELB').html(modelString);
+                updateLineList(varText);
+                updatePosList(varText);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("error:" + errorThrown);
+            }
+        });
+    }
+    function updateLineList(strMODEL_ID) {
+        var varText = strMODEL_ID;
+        var urlText = "@Url.Action("getLineListByModel","COPR16_COPRUNNING")";
+        var options = { "backdrop": "static", keyboard: true };
+        var jdata = {
+            "__RequestVerificationToken": $('input[name="__RequestVerificationToken"').val(),
+            MODEL_ID: strMODEL_ID
+        }
+        var modelString = "";
+        $.ajax({
+            type: "POST",
+            url: urlText,     //your action
+            data: jdata,
+            success: function (result) {
+                console.log(result);
+                //console.log(result.Data);
+                //modelString = result.Data.MODEL_DESC;
+                //$('.COPMODELA').html(modelString);
+                //$('.COPMODELB').html(modelString);
+                $('.list_LINE_ID').empty();
+
+                var listData = result.Data;
+                console.log(listData);
+                $.each(listData, function () {
+                    var item = this;
+                    $('.list_LINE_ID').append($('<option>').val(item.LINE_ID).text(item.LINE_DESC));
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("error:" + errorThrown);
+            }
+        });
+    }
+    function updatePosList(strMODEL_ID) {
+        var varText = strMODEL_ID;
+        var urlText = "@Url.Action("getPosListByModel","COPR16_COPRUNNING")";
+        var options = { "backdrop": "static", keyboard: true };
+        var jdata = {
+            "__RequestVerificationToken": $('input[name="__RequestVerificationToken"').val(),
+            MODEL_ID: strMODEL_ID
+        }
+        var modelString = "";
+        $.ajax({
+            type: "POST",
+            url: urlText,     //your action
+            data: jdata,
+            success: function (result) {
+                console.log(result);
+                //console.log(result.Data);
+                //modelString = result.Data.MODEL_DESC;
+                //$('.COPMODELA').html(modelString);
+                //$('.COPMODELB').html(modelString);
+                $('.list_POSITION_ID').empty();
+                var listData = result.Data;
+                console.log(listData);
+                $.each(listData, function () {
+                    var item = this;
+                    $('.list_POSITION_ID').append($('<option>').val(item.POS_ID).text(item.POS_DESC));
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("error:" + errorThrown);
+            }
+        });
     }
     function updateProc() {
         $('.qr-code-dsp-a').html("");
@@ -958,12 +1067,30 @@
     });
     $("input.sbBtn").click(function () {
         var MODEL_NO = $('#cOPR16_COPRUNNING_MODEL_ID').val();
+        var LINE_NO = $('.list_LINE_ID').val();
         $('.SB-MODEL-NO').val(MODEL_NO);
+        $('.SB-MODEL-NO').attr('DISABLED', 'DISABLED');
+        $('.SB-LINE-NO').val(LINE_NO);
+        $('.SB-LINE-NO').attr('DISABLED', 'DISABLED');
+
+        if (tbVarSB != undefined && tbVarSB != null) {
+            tbVarSB.clear().draw();
+        }
+
         $('#SB_DLG').modal('show');
     });
     $("input.bklBtn").click(function () {
         var MODEL_NO = $('#cOPR16_COPRUNNING_MODEL_ID').val();
-        $('.BKL-MODEL-NO').val(MODEL_NO);
+        var LINE_NO = $('.list_LINE_ID').val();
+        var SB_PARTNO = $('.SB-PNO').val();
+        $('.BKL_FG_NO').val(SB_PARTNO);
+        $('.BKL_MODEL_NO').val(MODEL_NO);
+        $('.BKL_MODEL_NO').attr('DISABLED', 'DISABLED');
+        $('.BKL_LINE_NO').val(LINE_NO);
+        $('.BKL_LINE_NO').attr('DISABLED', 'DISABLED');
+        if (tbVarBKL != undefined && tbVarBKL != null) {
+            tbVarBKL.clear().draw();
+        }
         $('#BKL_DLG').modal('show');
     });
 </script>
@@ -1028,6 +1155,15 @@
         $('.CONFIRM-BKL-PNO').val(fg_id);
         $('.CONFIRM-BKL-LOTNO').focus();
     });
+    $("body").on("click", "a.bkl_select_btn2", function (ev) {
+        var p = $(this).parent();
+        var fg_id = $(p).find(".hBKL-PNO").val();
+        var value1 = $('.CONFIRM-BKL-PNO').val();
+        $('#SELECT-BKL-DLG').modal('show');
+        $('#BKL_DLG').modal('hide');
+        $('.CONFIRM-BKL-PNO').val(value1 + ", " + fg_id);
+        $('.CONFIRM-BKL-LOTNO').focus();
+    });
     $('.confirm-select-Btn').click(function () {
         var SBPNO = $('.SB-PNO').val();
         var SBLOTNO = $('.SB-LOTNO').val();
@@ -1078,16 +1214,25 @@
         $('#text-hSB-PNO').val(SBPNO);
         $('#text-hSB-LOTNO').val(SBLOTNO);
     }
-    $('.search-bkl-btn').click(function () {
+   $('.search-bkl-btn').click(function () {
         var fg_no = $('.BKL_FG_NO').val();
-        var brand_no = $('.BKL_BRAND_NO').val();
+        var line_no = $('.BKL_LINE_NO').val();
         var model_no = $('.BKL_MODEL_NO').val();
+        var position_no = $('.list_POSITION_ID').val();
 
-        var urlText = "@Url.Action("GetItems","COPR16_COPRUNNING")";
+
+        var urlText = "@Url.Action("getBuckleListModel","COPR16_COPRUNNING")";
         var options = { "backdrop": "static", keyboard: true };
-        var jdata = {"fg_no":fg_no,"model_no": model_no,"brand_no":brand_no}
+        var jdata = {
+            "__RequestVerificationToken": $('input[name="__RequestVerificationToken"').val(),
+            "fg_no": fg_no,
+            "model_no": model_no,
+            "line_no": line_no,
+            "pos_no": position_no
+        }
         console.log(jdata);
         //console.log(".---.");
+        var varMultipleBLK = false;
         $.ajax({
             type: "POST",
             url: urlText,     //your action
@@ -1098,24 +1243,87 @@
                 console.log(result);
                 //alert(result);
                 //updateInfo(result);
-                tbVarSB.clear().draw();
-                var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT</a>";
+                
+                tbVarBKL.clear().draw();
 
-                $.each(result, function (i, item) {
-                    var row = tbVarBKL.row.add([
-                        result[i].a_FG_NO,
-                        result[i].b_FG_DESC,
-                        result[i].a_MODLE_ID,
-                        result[i].a_MODLE_ID,
-                        ""]).draw(false).node();
-			            var hPNO = $("<input type='hidden' value='" + result[i].a_FG_NO + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+                $.each(result.Data, function (i, item) {
+                    if (result.Data[i].fgtype_id == null || result.Data[i].fgtype_id == '') {
+                        varMultipleBLK = false;
+                    }else {
+                        varMultipleBLK = true;
+                    }
+                    if (varMultipleBLK) {
+                        var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT 1st BLK </a>";
+                        var selectBtn2 = "<a class='btn btn-primary button bkl_select_btn2' style='margin-top:5px'>SELECT 2nd BLK </a>";
+                        var blkArr = result.Data[i].fgtype_id.split(',');
+                        var row = tbVarBKL.row.add([
+                            result.Data[i].ITEM_ID,
+                            result.Data[i].MODLE_ID,
+                            result.Data[i].LINE_ID,
+                            result.Data[i].POS_DESC,
+                            ""]).draw(false).node();
+                        var hPNO = $("<input type='hidden' value='" + result.Data[i].ITEM_ID + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
                         $(row).find('td').eq(4).addClass('command');
                         $(row).find('td').eq(4).append(selectBtn);
-			$(row).find('td').eq(4).append(hPNO);
+                        if(varMultipleBLK) {
+                                    $(row).find('td').eq(4).append("<BR>");
+                                    $(row).find('td').eq(4).append(selectBtn2);
+                                    $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        }
+                        $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        $(row).find('td').eq(4).append(hPNO);
+
+                        if (blkArr.length > 0) {
+                            console.log(blkArr);
+
+                            $.each(blkArr, function (index, keyString) {
+                                console.log("index: ",index);
+                                console.log("keyString: ",keyString);
+                                
+                                var row = tbVarBKL.row.add([
+                                    keyString,
+                                    result.Data[i].MODLE_ID,
+                                    result.Data[i].LINE_ID,
+                                    result.Data[i].POS_DESC,
+                                    ""]).draw(false).node();
+                                var hPNO = $("<input type='hidden' value='" + keyString + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
+                                $(row).find('td').eq(4).addClass('command');
+                                $(row).find('td').eq(4).append(selectBtn);
+                                if(varMultipleBLK) {
+                                    $(row).find('td').eq(4).append("<BR>");
+                                    $(row).find('td').eq(4).append(selectBtn2);
+                                    $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                                }
+                                $(row).find('td').eq(4).append(hPNO);
+                                
+                            });
+                        }
+                   
+                    } else {
+                        var selectBtn = "<a class='btn btn-primary button bkl_select_btn'>SELECT BLK </a>";
+                        
+                        var row = tbVarBKL.row.add([
+                            (varMultipleBLK == false) ? result.Data[i].ITEM_ID : result.Data[i].ITEM_ID + ', ' + result.Data[i].fgtype_id,
+                            result.Data[i].MODLE_ID,
+                            result.Data[i].LINE_ID,
+                            result.Data[i].POS_DESC,
+                            ""]).draw(false).node();
+                        var hPNO = $("<input type='hidden' value='" + result.Data[i].ITEM_ID + "' id='hBKL-PNO' class='hBKL-PNO'/>");
+
+                        $(row).find('td').eq(4).addClass('command');
+                        $(row).find('td').eq(4).append(selectBtn);
+                        $(row).find('td').eq(4).attr("style", "text-align:left  !important;");
+                        $(row).find('td').eq(4).append(hPNO);
+
+                    }
+                    
+			        
                 });
 
 
-
+                
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("error:" + errorThrown);
@@ -1123,6 +1331,7 @@
         });
         return false;
     });
+
     UpdateBkl();
     UpdateSb();
 </script><!-- /Script For Select Bunkle -->
@@ -1348,4 +1557,5 @@
         //alert(varText);
     }
     updateProcSELECTED();
+    updateProc();
 </script><!-- /Script For Save to database visa json -->

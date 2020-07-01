@@ -1,7 +1,7 @@
 @using System.Web.Http
 @using System.Web.Http.Description
-@using CM_API.Areas.HelpPage.Models
-@using CM_API.Areas.HelpPage.ModelDescriptions
+@using CAPIs.Areas.HelpPage.Models
+@using CAPIs.Areas.HelpPage.ModelDescriptions
 @model HelpPageApiModel
 
 @{
@@ -12,7 +12,10 @@
     <p>@description.Documentation</p>
 
     <h2>Request Information</h2>
-
+    @if (Model.AuthRequired)
+    {
+        <h3>Authorization required.</h3>
+    }
     <h3>URI Parameters</h3>
     @Html.DisplayFor(m => m.UriParameters, "Parameters")
 

@@ -11,10 +11,10 @@ using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 using System.Web.Http.Description;
-using CM_API.Areas.HelpPage.ModelDescriptions;
-using CM_API.Areas.HelpPage.Models;
+using CAPIs.Areas.HelpPage.ModelDescriptions;
+using CAPIs.Areas.HelpPage.Models;
 
-namespace CM_API.Areas.HelpPage
+namespace CAPIs.Areas.HelpPage
 {
     public static class HelpPageConfigurationExtensions
     {
@@ -233,21 +233,45 @@ namespace CM_API.Areas.HelpPage
 
             return (HelpPageApiModel)model;
         }
-
+       
         private static HelpPageApiModel GenerateApiModel(ApiDescription apiDescription, HttpConfiguration config)
         {
             HelpPageApiModel apiModel = new HelpPageApiModel()
             {
                 ApiDescription = apiDescription,
+                AuthRequired = CheckForAuth(apiDescription)
             };
+            var attrs2 = apiDescription.ActionDescriptor.GetCustomAttributes<APIRequestAttribute>();
+            foreach (var attr in attrs2)
+            {
+                apiModel.ApiDescription.Documentation = attr.Descrption;
+            }
+           
 
             ModelDescriptionGenerator modelGenerator = config.GetModelDescriptionGenerator();
+            
             HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
             GenerateUriParameters(apiModel, modelGenerator);
+
+
+           
+            var attrs = apiDescription.ActionDescriptor.GetCustomAttributes<DynamicUriParameterAttribute>();
+
+            foreach (var attr in attrs)
+            {
+                apiModel.UriParameters.Add(
+                   new ParameterDescription
+                   {
+                       Name = attr.Name,
+                       Documentation = attr.Description,
+                       TypeDescription = modelGenerator.GetOrCreateModelDescription(attr.Type)
+                   }
+                 );
+            }
+
             GenerateRequestModelDescription(apiModel, modelGenerator, sampleGenerator);
             GenerateResourceDescription(apiModel, modelGenerator);
             GenerateSamples(apiModel, sampleGenerator);
-
             return apiModel;
         }
 
@@ -462,6 +486,11 @@ namespace CM_API.Areas.HelpPage
             {
                 apiModel.ErrorMessages.Add(invalidSample.ErrorMessage);
             }
+        }
+        private static bool CheckForAuth(ApiDescription apiDescription)
+        {
+            return apiDescription.ActionDescriptor.GetCustomAttributes<AuthorizeAttribute>().Count != 0 ||
+                   apiDescription.ActionDescriptor.ControllerDescriptor.GetCustomAttributes<AuthorizeAttribute>().Count != 0;
         }
     }
 }

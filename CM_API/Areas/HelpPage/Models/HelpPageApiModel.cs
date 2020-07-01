@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http.Headers;
 using System.Web.Http.Description;
-using CM_API.Areas.HelpPage.ModelDescriptions;
+using CAPIs.Areas.HelpPage.ModelDescriptions;
 
-namespace CM_API.Areas.HelpPage.Models
+namespace CAPIs.Areas.HelpPage.Models
 {
     /// <summary>
     /// The model that represents an API displayed on the help page.
@@ -21,7 +21,7 @@ namespace CM_API.Areas.HelpPage.Models
             SampleResponses = new Dictionary<MediaTypeHeaderValue, object>();
             ErrorMessages = new Collection<string>();
         }
-
+        public bool AuthRequired { get; set; }
         /// <summary>
         /// Gets or sets the <see cref="ApiDescription"/> that describes the API.
         /// </summary>
